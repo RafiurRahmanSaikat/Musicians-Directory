@@ -1,5 +1,53 @@
 {% extends "base.html" %} {% block content %}
 
-<h1>HI HOME</h1>
+<h1 class="text-center">Musician</h1>
 
-{% endblock content %}
+{% if data %}
+<table class="table m-4 p-4">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Musician Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Album Rating</th>
+      <th scope="col">Instrument Type</th>
+      <th scope="col">Album Name</th>
+      <th scope="col">Release Date</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in data %}
+    <tr>
+      <th scope="row">{{item.id}}</th>
+      <td>
+        <a
+          class="text-decoration-none text-black"
+          href="{% url 'edit_musician' item.musicain_id %}"
+          >{{item.musician_name}}</a
+        >
+      </td>
+      <td>{{item.email}}</td>
+      <td>{{item.album_rating}}</td>
+      <td>{{item.instrument_type}}</td>
+      <td>{{item.album_name}}</td>
+      <td>{{item.release_date|date:"d M Y "}}</td>
+      <td>
+        <a
+          href="{% url 'edit_album' item.id %}"
+          class="btn btn-sm btn-outline-success"
+          >Edit</a
+        >
+        <a
+          href="{% url 'delete_musician' item.musicain_id %}"
+          class="btn btn-sm btn-outline-danger"
+          >Delete</a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<h1 class="text-danger text-center">No Data</h1>
+{% endif %} {% endblock content %}
